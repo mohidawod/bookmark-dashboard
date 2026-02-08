@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة الروابط | Bookmark Dashboard</title>
+    <meta name="description" content="لوحة تحكم احترافية لإدارة الروابط المفضلة">
+    <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#6366f1">
+    <link rel="apple-touch-icon" href="assets/icon-192x192.png">
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Header Section -->
+        <header>
+            <div class="logo-section">
+                <h1>لوحة الروابط</h1>
+                <div class="controls">
+                    <button id="themeToggle" class="btn btn-icon" title="تبديل الوضع">
+                        <svg id="moonIcon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round">
+                            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                        </svg>
+                        <svg id="sunIcon" class="hidden" xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round" style="display:none;">
+                            <circle cx="12" cy="12" r="5"></circle>
+                            <line x1="12" y1="1" x2="12" y2="3"></line>
+                            <line x1="12" y1="21" x2="12" y2="23"></line>
+                            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                            <line x1="1" y1="12" x2="3" y2="12"></line>
+                            <line x1="21" y1="12" x2="23" y2="12"></line>
+                            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                        </svg>
+                    </button>
+                    <button id="exportData" class="btn btn-icon" title="تصدير البيانات">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v4"></path>
+                            <polyline points="7 10 12 15 17 10"></polyline>
+                            <line x1="12" y1="15" x2="12" y2="3"></line>
+                        </svg>
+                    </button>
+                    <button id="importData" class="btn btn-icon" title="استيراد البيانات">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v4"></path>
+                            <polyline points="17 8 12 3 7 8"></polyline>
+                            <line x1="12" y1="3" x2="12" y2="15"></line>
+                        </svg>
+                        <input type="file" id="importInput" accept=".json" style="display: none;">
+                    </button>
+                </div>
+            </div>
+
+            <div class="search-container">
+                <input type="text" id="searchInput" class="search-input" placeholder="ابحث عن اسم الموقع أو الفئة...">
+                <span class="search-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                    </svg>
+                </span>
+            </div>
+
+            <div class="action-buttons">
+                <button id="addBookmarkBtn" class="btn btn-primary">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="12" y1="5" x2="12" y2="19"></line>
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                    </svg>
+                    إضافة رابط
+                </button>
+            </div>
+        </header>
+
+        <!-- Stats Bar -->
+        <div class="stats-bar">
+            <div class="stat-item">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z"></path>
+                </svg>
+                <span>إجمالي الروابط:</span>
+                <span id="totalBookmarks" class="stat-value">0</span>
+            </div>
+            <div class="stat-item">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
+                </svg>
+                <span>إجمالي الفئات:</span>
+                <span id="totalCategories" class="stat-value">0</span>
+            </div>
+            <div class="stat-item" style="margin-right: auto; opacity: 0.6; font-size: 0.8rem;">
+                <span>اضغط مرتين للتعديل | مفتاح / للبحث</span>
+            </div>
+        </div>
+
+        <!-- Main Dashboard -->
+        <main id="dashboard" class="categories-container">
+            <!-- Dynamic Content Here -->
+            <div class="empty-state">
+                <span class="empty-state-icon">✨</span>
+                <p>ابدأ بإضافة روابطك المفضلة أو تصنيف جديد</p>
+            </div>
+        </main>
+    </div>
+
+    <!-- Add/Edit Bookmark Modal -->
+    <div id="bookmarkModal" class="modal-overlay">
+        <div class="modal-content">
+            <h2 class="modal-title">إضافة رابط جديد</h2>
+            <form id="bookmarkForm">
+                <div class="form-group">
+                    <label for="siteName">اسم الموقع</label>
+                    <input type="text" id="siteName" class="form-input" placeholder="مثال: GitHub" required>
+                </div>
+                <div class="form-group">
+                    <label for="siteUrl">رابط الموقع (URL)</label>
+                    <input type="url" id="siteUrl" class="form-input" placeholder="https://..." required>
+                </div>
+                <div class="form-group">
+                    <label for="siteCategory">الفئة</label>
+                    <input type="text" id="siteCategory" class="form-input" list="categoryList"
+                        placeholder="اختر أو اكتب فئة جديدة" required>
+                    <datalist id="categoryList">
+                        <!-- Dynamic Categories -->
+                    </datalist>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn" id="closeModal">إلغاء</button>
+                    <button type="submit" class="btn btn-primary">حفظ</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+
+</html>
